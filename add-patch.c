@@ -255,22 +255,23 @@ struct hunk {
 };
 
 struct add_p_state {
-	struct add_i_state s;
-	struct strbuf answer, buf;
+	struct add_i_state s; // git add -i的状态信息
+	struct strbuf answer, buf;//存储用户输入和临时缓冲区的数据。
 
 	/* parsed diff */
-	struct strbuf plain, colored;
-	struct file_diff {
+	struct strbuf plain, colored; // 存储解析后的补丁内容和带有颜色标记的补丁内容。
+	struct file_diff { // 表示文件的补丁信息
 		struct hunk head;
 		struct hunk *hunk;
 		size_t hunk_nr, hunk_alloc;
+		// 表示该文件的变更类型（删除、添加、模式变更、二进制文件）
 		unsigned deleted:1, added:1, mode_change:1,binary:1;
 	} *file_diff;
 	size_t file_diff_nr;
 
 	/* patch mode */
-	struct patch_mode *mode;
-	const char *revision;
+	struct patch_mode *mode;//表示补丁模式的信息
+	const char *revision; //表示与补丁操作相关的修订版本（revision）信息
 };
 
 static void add_p_state_clear(struct add_p_state *s)

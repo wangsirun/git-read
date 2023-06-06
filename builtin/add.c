@@ -465,12 +465,12 @@ int cmd_add(int argc, const char **argv, const char *prefix)
 
 	argc = parse_options(argc, argv, prefix, builtin_add_options,
 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
-	if (patch_interactive)
+	if (patch_interactive) // 交互模式进行add
 		add_interactive = 1;
 	if (add_interactive) {
-		if (show_only)
+		if (show_only) // 模拟要添加的动作，不出发实际的行为
 			die(_("options '%s' and '%s' cannot be used together"), "--dry-run", "--interactive/--patch");
-		if (pathspec_from_file)
+		if (pathspec_from_file) // 通配符存储在文件中 git add --pathspec-from-file=<file>
 			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--interactive/--patch");
 		exit(interactive_add(argv + 1, prefix, patch_interactive));
 	}
